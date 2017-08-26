@@ -1,0 +1,18 @@
+[user]
+	email = peter.kuehne@gmail.com
+	name = Peter Kuehne
+[color]
+	ui = true
+[alias]
+	logdog = log --decorate --oneline --graph
+	logdogsimple = log --decorate --oneline --graph --simplify-by-decoration
+	d = difftool
+[core]
+	excludesfile = /home/pkuhne1/.gitignore_global
+	editor = vim
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
+[push]
+	default = current
