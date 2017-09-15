@@ -9,6 +9,7 @@ set ignorecase          " ignores case in searching
 set incsearch           " shows matches as you search with "/"
 set makeprg=make        " what program to use to make c files
 set mouse=a             " enables the mouse
+set ttymouse=xterm2     " Makes the mouse behave better with tmux
 set nu                  " show line numbers
 set ruler               " show cursor position in status line
 set shiftwidth=4        " indentation will insert this many spaces
@@ -17,8 +18,8 @@ set showmatch           " show matching bracket
 set foldmethod=indent   " fold on indent
 set smarttab            " **
 set softtabstop=4       " backspace treats spaces as tab
-set textwidth=81        " set linebreak at 81
-set cc=80               " Shows a line marker at 80 characters
+set textwidth=80        " set linebreak at 81
+set cc=81               " Shows a line marker at 80 characters
 set wrap                " wrap lines onto screen, rather than cutting off
 set expandtab           " use spaces instead of tabs
 set backspace=indent,eol,start  " backspace works for softtabs in insert mode
@@ -37,13 +38,13 @@ set spell spelllang=en_gb   "Set spell check to British English
 set encoding=utf-8
 set t_Co=256            " Force 256 colours
 set background=dark
+set hidden              " Allow hidden buffers with unsaved changes
 
 set title titleold=%<%F%=%l/%L-%P titlelen=70
 
-syntax on           " enables syntax highlighting
-
 set wildignore+=*/00deps/*,*/llcalc*/*,*.o,*.dd,*.d,00*,*.gcno,*.gcda
 set wildignore+=*.log*
+set wildignore+=*.pyc*
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """"                            KEY MAPPINGS                                """"
@@ -54,17 +55,19 @@ let mapleader=" "
 nnoremap Q       q
 nnoremap <F1> :!banner HELP <CR>
 nnoremap <F2> 
-nnoremap <F3> I/* <Esc>A */<Esc>
+nnoremap <F3> :Autoformat<CR>
 nnoremap <F4> :SyntasticCheck<CR>
-nnoremap <F5> :call VimuxRunCommand("make build")<CR>
-nnoremap <F6> :call VimuxRunCommand("make test")<CR>
-nnoremap <F7> :call VimuxRunCommand("make itest")<CR>
+nnoremap <F5> :Make build<CR>
+nnoremap <F6> :Make test<CR>
+nnoremap <F7> :Make itest<CR>
 nnoremap <F8> 
 nnoremap <F9> :NERDTreeToggle<CR> :TagbarToggle<CR>
-nnoremap <F10> 
+nnoremap <F10> :MerginalToggle<CR>
 nnoremap <F11> 
 nnoremap <F11> 
 nnoremap <F12> :set ignorecase! <CR>
+
+nnoremap <S-F5> :call VimuxRunCommand("make clean && make build")<CR>
 
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
@@ -74,18 +77,26 @@ nnoremap <C-H> <C-W><C-H>
 nnoremap <C-Z> :VimwikiAll2HTML<CR>
 nnoremap <C-P> :<C-u>Unite -start-insert file_rec<CR>
 nnoremap <Leader>w :bp\|bd #<CR>
+nnoremap <Leader>r :source $MYVIMRC<CR>
+nnoremap <Leader>g :Gstatus<CR>
 
-nmap <Leader>1 <Plug>AirlineSelectTab1
-nmap <Leader>2 <Plug>AirlineSelectTab2
-nmap <Leader>3 <Plug>AirlineSelectTab3
-nmap <Leader>4 <Plug>AirlineSelectTab4
-nmap <Leader>5 <Plug>AirlineSelectTab5
-nmap <Leader>6 <Plug>AirlineSelectTab6
-nmap <Leader>7 <Plug>AirlineSelectTab7
-nmap <Leader>8 <Plug>AirlineSelectTab8
-nmap <Leader>9 <Plug>AirlineSelectTab9
-nmap <Leader>- <Plug>AirlineSelectPrevTab
-nmap <Leader>+ <Plug>AirlineSelectNextTab
+""" Plugin-specific Leader mappings """
+"""""""""""""""""""""""""""""""""""""""
+nmap <Leader>bt <Plug>BookmarkToggle
+nmap <Leader>ba <Plug>BookmarkAnnotate
+nmap <Leader>bs <Plug>BookmarkShowAll
+nmap <Leader>bj <Plug>BookmarkNext
+nmap <Leader>bk <Plug>BookmarkPrev
+nmap <Leader>bc <Plug>BookmarkClear
+nmap <Leader>bC <Plug>BookmarkClearAll
+nmap <Leader>bk <Plug>BookmarkMoveUp
+nmap <Leader>bj <Plug>BookmarkMoveDown
+nmap <Leader>bg <Plug>BookmarkMoveToLine
+
+nmap <Leader>a :Autoformat<CR>
+
+nmap <Leader>h :CtrlSpaceGoUp<CR>
+nmap <Leader>l :CtrlSpaceGoDown<CR>
 
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 inoremap <expr> <C-n> pumvisible() ? '<C-n>' : '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
@@ -104,20 +115,24 @@ if !empty(glob("~/.vim/bundle/Vundle.vim"))
     call vundle#begin()
     Plugin 'VundleVim/Vundle.vim'               "Let Vundle manage Vundle
     Plugin 'vim-airline/vim-airline'            "Status Bar
-    Plugin 'MattesGroeger/vim-bookmarks'        "Bookmarks
+    Plugin 'Chiel92/vim-autoformat'             "Formatting for files
+    Plugin 'MattesGroeger/vim-bookmarks'        "Bookmarking lines
     Plugin 'altercation/vim-colors-solarized'   "Solarized color scheme
+    Plugin 'vim-ctrlspace/vim-ctrlspace'        "Buffer/Tab management
+    Plugin 'tpope/vim-dispatch'                 "Asynchronous make support
     Plugin 'nvie/vim-flake8'                    "PEP8 checking
     Plugin 'tpope/vim-fugitive'                 "Git integration
+    Plugin 'airblade/vim-gitgutter'             "Line markings for changes
     Plugin 'tpope/vim-markdown'                 "Markdown support
-    Plugin 'JamshedVesuna/vim-markdown-preview' "Makrdown preview
-    Plugin 'xolox/vim-misc'                     "Misc stuff needed by vim-session
+    Plugin 'JamshedVesuna/vim-markdown-preview' "Markdown preview
+    Plugin 'idanarye/vim-merginal'              "Git branch management
     Plugin 'scrooloose/nerdtree'                "File Tree
+    Plugin 'scrooloose/nerdcommenter'           "Better commenting support
     Plugin 'vimoutliner/vimoutliner'            "Outliner
     Plugin 'reedes/vim-pencil'                  "For writers
-    Plugin 'xolox/vim-session'                  "Window session management
+    Plugin 'octol/vim-cpp-enhanced-highlight'   "Better C++ syntax highlighting
     Plugin 'scrooloose/syntastic'               "Syntax check on save
     Plugin 'majutsushi/tagbar'                  "Tag Manager
-    Plugin 'Shougo/unite.vim'                   "Fuzzy file finder
     Plugin 'benmills/vimux'                     "Vim/tmux integration
     Plugin 'vimwiki/vimwiki'                    "Personal wiki
     Plugin 'jnurmine/Zenburn'                   "Syntax highlighting
@@ -141,35 +156,34 @@ endif
 if &runtimepath =~ 'syntastic'
     let g:syntastic_cpp_include_dirs=['./src/']
     let g:syntastic_mode_map = {
-            \ "mode": "active",
-            \ "passive_filetypes": ["cpp", "python", "bash"] }
+                \ "mode": "active",
+                \ "passive_filetypes": ["cpp", "python", "bash"] }
 endif
 
 if &runtimepath =~ 'tagbar'
     let g:tagbar_ctags_bin='/opt/swt/bin/ctags'
     let g:tagbar_left = 1
-    let g:tagbar_vertical = 30
-endif
-
-if &runtimepath =~ 'session'
-    let g:session_autosave = 'yes'
-    let g:session_autosave_to = 'autosave'
-    let g:session_autoload = 'yes'
-    let g:session_default_to_last = 1
+    let g:tagbar_vertical = 20
 endif
 
 if &runtimepath =~ 'nerdtree'
-    let NERDTreeIgnore = ['\.pyc$', '\.o$', '\.d$']
+    let NERDTreeIgnore = ['\.pyc$', '\.d$', '\.dd$', '\.log.', 'llcalc', '^00',
+                \ '\.so$', '\.tsk', '\.o$', '\.sundev1\.', '\.ibm\.', '\.linux\.']
     let NERDTreeWinPos = 'left'
-    let g:NERDTreeDirArrowExpandable = '+'
-    let g:NERDTreeDirArrowCollapsible = '-'
+    let NERDTreeWinSize = 50
+    let g:NERDTreeDirArrowExpandable = '►'
+    let g:NERDTreeDirArrowCollapsible = '▼'
 endif
 
 if &runtimepath =~ 'airline'
+    let g:airline#extensions#ctrlspace#enabled = 1
     let g:airline#extensions#tabline#enabled = 1
     let g:airline#extensions#tabline#fnamemod = ':t'
     let g:airline#extensions#tabline#buffers_label = 'Files'
+    let g:airline#extensions#tabline#tabs_label = 'Tabs'
     let g:airline#extensions#tabline#buffer_idx_mode = 1
+    "let g:airline#extensions#hunks#enabled = 1
+    "let g:airline#extensions#tabline#switch_buffers_and_tabs = 0
 endif
 
 if &runtimepath =~ 'unite'
@@ -183,29 +197,46 @@ if &runtimepath =~ 'solarized'
     colorscheme solarized
 endif
 
-if &runtimepath =~ 'glaive'
-    call glaive#Install()
-endif
-
 if &runtimepath =~ 'pencil'
     "
     let g:pencil#wrapModeDefault = 'hard' "Soft wrap
     augroup pencil
         autocmd!
         autocmd FileType md, txt    call pencil#init()
-                                \ | call lexical#init()
-                                \ | call litecorrect#init()
-                                \ | call textobj#quote#init()
-                                \ | call textobj#sentence#init()
+                    \ | call lexical#init()
+                    \ | call litecorrect#init()
+                    \ | call textobj#quote#init()
+                    \ | call textobj#sentence#init()
     augroup END
 endif
 
 " Vimwiki settings
 if &runtimepath =~ 'vimwiki'
     let g:vimwiki_list = [
-        \ {'path': '$HOME/Documents/wiki/', 'path_html': '$HOME/public_html/'},
-        \ {'path': '$HOME/Writings/test/wiki/', 'path_html': '$HOME/Writings/test/wiki/export'}
-        \ ]
+                \ {'path': '$HOME/Documents/wiki/', 'path_html': '$HOME/public_html/'},
+                \ {'path': '$HOME/Writings/test/wiki/', 'path_html': '$HOME/Writings/test/wiki/export'}
+                \ ]
+endif
+
+if &runtimepath =~ 'bookmark'
+    let g:bookmark_no_default_key_mappings = 1
+endif
+
+if &runtimepath =~ 'vim-ctrlspace'
+    let g:CtrlSpaceStatuslineFunction = "airline#extensions#ctrlspace#statusline()"
+    let g:CtrlSpaceSaveWorkspaceOnSwitch = 1
+    let g:CtrlSpaceSaveWorkspaceOnExit = 1
+    if executable("ag")
+        let g:CtrlSpaceGlobCommand = 'ag -l --nocolor -g ""'
+    endif
+endif
+
+if &runtimepath =~ 'nerdcommented'
+    let g:NERDSpaceDelims = 1
+    let g:NERDCommentEmptyLines = 1
+    let g:NERDTrimTrailingWhitespace = 1
 endif
 
 filetype plugin indent on
+syntax on           " enables syntax highlighting
+

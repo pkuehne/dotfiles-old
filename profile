@@ -1,20 +1,41 @@
-# ~/.profile: executed by the command interpreter for login shells.
-# This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
-# exists.
-# see /usr/share/doc/bash/examples/startup-files for examples.
-# the files are located in the bash-doc package.
+# ~/.profile skeleton
+# ~/.profile runs on interactive login shells if it exists
+# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
-# the default umask is set in /etc/profile; for setting the umask
-# for ssh logins, install and configure the libpam-umask package.
-#umask 022
+# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+# commandline editing
+set -o vi      # vi style command line mode
 
-# if running bash
-if [ -n "$BASH_VERSION" ]; then
-    # include .bashrc if it exists
-    if [ -f "$HOME/.bashrc" ]; then
-	. "$HOME/.bashrc"
-    fi
+# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+# this variable needs to be set for pnewtask/pnewscript to function
+# if you don't know what to put here leave it alone or ask your team.
+#GROUP=put_your_group_here
+
+# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+# chimera not present/didn't run, set some basic stuff up
+# hope /etc/passwd is good enough
+if [ ! "$BBENV" ]
+then
+     PS1="${HOSTNAME}:\${PWD} \$ "
+     PATH=$PATH:/usr/sbin
+     ##LPDEST=put_your_printer_here
+     ##GROUP=put_your_group_here
+     stty erase \^\h kill \^u intr \^c
+     stty echoe echok ixon ixoff -ixany
+
+     if [ $(uname) = "SunOS" ] && [ ! "$BASH" ]
+     then
+          set -o emacs
+          alias __A=$(print '\0020') # ^P = up = previous command
+          alias __B=$(print '\0016') # ^N = down = next command
+          alias __C=$(print '\0006') # ^F = right = forward a character
+          alias __D=$(print '\0002') # ^B = left = back a character
+          alias __H=$(print '\0001') # ^A = home = beginning of line
+          stty erase ^?
+          #echo "SunOS keys set"
+     fi
 fi
 
-# set PATH so it includes user's private bin directories
-PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+if [ -f ~/.bashrc ]; then
+    source ~/.bashrc
+fi

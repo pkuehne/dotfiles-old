@@ -1,5 +1,5 @@
 [user]
-	email = peter.kuehne@gmail.com
+	email = pkuehne@bloomberg.net
 	name = Peter Kuehne
 [color]
 	ui = true
@@ -16,3 +16,5 @@
 	prompt = false
 [push]
 	default = current
+[http]
+	sslVerify = false
