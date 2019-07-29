@@ -1,0 +1,14 @@
+---
+  - name: Install tmux config file
+    template:
+        src: templates/tmux.jj2
+        dest: ~/.tmux.conf
+    tags:
+        - config
+  - name: Install tmux plugin manager
+    git:
+        repo: https://github.com/tmux-plugins/tpm
+        dest: ~/.tmux/plugins/tpm
+    tags:
+        - repo
+

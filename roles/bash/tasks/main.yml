@@ -1,0 +1,19 @@
+---
+  - name: Install bashrc
+    template:
+        src: bashrc.jj2
+        dest: ~/.bashrc
+    tags:
+        - config
+  - name: Install bash aliases
+    template:
+        src: bashrc_aliases.jj2
+        dest: ~/.bashrc_aliases
+    tags:
+        - config
+  - name: Install Prompt
+    template:
+        src: bashrc_ps1.jj2
+        dest: ~/.bashrc_ps1
+    tags:
+        - config

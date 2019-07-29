@@ -1,0 +1,19 @@
+---
+  - name: Install vim config file
+    template:
+        src: templates/vimrc.jj2
+        dest: ~/.vimrc
+    tags:
+        - config
+  - name: Get Vundle
+    git:
+        repo: https://github.com/VundleVim/Vundle.vim.git
+        dest: ~/.vim/bundle/Vundle.vim
+    tags:
+        - repo
+  - name: Install Plugins
+    command:
+        vim +PluginInstall +qall
+    tags:
+        - repo
+

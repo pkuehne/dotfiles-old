@@ -1,0 +1,8 @@
+---
+  - name: Install gitconfig file
+    template:
+        src: gitconfig.jj2
+        dest: ~/.gitconfig
+    tags:
+        - config
+

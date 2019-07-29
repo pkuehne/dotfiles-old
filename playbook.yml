@@ -1,75 +1,13 @@
 ---
 - hosts: 127.0.0.1
   connection: local
-  tasks:
-  - name: Set e-mail address
-    set_fact:
-        email: "{{ 'peter.kuehne@gmail.com' if ansible_user_id == 'peter' else 'pkuehne@bloomberg.net' }}"
-    tags:
-        - git
+  vars_prompt:
+      - name: email
+        prompt: "Please enter your e-mail address"
+        private: no
+  roles:
+      - vim
+      - tmux
+      - git
+      - bash
 
-  - name: Install vim config file
-    template:
-        src: templates/vimrc.jj2
-        dest: ~/.vimrc
-    tags:
-        - vim
-        - config
-  - name: Get Vundle
-    git:
-        repo: https://github.com/VundleVim/Vundle.vim.git
-        dest: ~/.vim/bundle/Vundle.vim
-    tags:
-        - vim
-        - repo
-  - name: Install Plugins
-    command:
-        vim +PluginInstall +qall
-    tags:
-        - vim
-        - repo
-
-  - name: Install tmux config file
-    template:
-        src: templates/tmux.jj2
-        dest: ~/.tmux.conf
-    tags:
-        - tmux
-        - config
-  - name: Get TPM
-    git:
-        repo: https://github.com/tmux-plugins/tpm
-        dest: ~/.tmux/plugins/tpm
-    tags:
-        - tmux
-        - repo
-
-  - name: Install gitconfig file
-    template:
-        src: gitconfig.jj2
-        dest: ~/.gitconfig
-    tags:
-        - git
-        - config
-
-  - name: Install bashrc
-    template:
-        src: bashrc.jj2
-        dest: ~/.bashrc
-    tags:
-        - bash
-        - config
-  - name: Install bash aliases
-    template:
-        src: bashrc_aliases.jj2
-        dest: ~/.bashrc_aliases
-    tags:
-        - bash
-        - config
-  - name: Install Prompt
-    template:
-        src: bashrc_ps1.jj2
-        dest: ~/.bashrc_ps1
-    tags:
-        - bash
-        - config
