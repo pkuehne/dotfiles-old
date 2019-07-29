@@ -1,12 +1,19 @@
 #! /usr/bin/env bash
 
-if [ "$EUID" -ne 0 ]
+ansible_path="$(which ansible)"
+if [ "$ansible_path" != "" ]
 then
-    echo "Please re-run as root"
-    exit 1
+    echo "Ansible is already installed"
+else
+    sudo ./scripts/setup_ansible.sh
 fi
 
-apt-add-repository -y ppa:ansible/ansible
-apt update
-apt install -y software-properties-common
-apt install -y ansible
+vars_file="./vars.yml"
+if [ -f "$vars_file" ]
+then
+    echo "$vars_file already exists"
+else
+    ./scripts/setup_vars.sh 
+fi
+
+exit 0
