@@ -1,14 +1,14 @@
 [user]
-	email = pkuehne@bloomberg.net
+	email = {{ email }}
 	name = Peter Kuehne
 [color]
 	ui = true
 [alias]
 	logdog = log --decorate --oneline --graph
-	logdogsimple = log --decorate --oneline --graph --simplify-by-decoration
+	logdogs = log --decorate --oneline --graph --simplify-by-decoration
 	d = difftool
 [core]
-	excludesfile = /home/pkuhne1/.gitignore_global
+	excludesfile = ~/.gitignore_global
 	editor = vim
 [diff]
 	tool = vimdiff
@@ -16,5 +16,3 @@
 	prompt = false
 [push]
 	default = current
-[http]
-	sslVerify = false

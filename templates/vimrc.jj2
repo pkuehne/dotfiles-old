@@ -54,17 +54,17 @@ let mapleader=" "
 " Reformat paragraph: gq
 nnoremap Q       q
 nnoremap <F1> :!banner HELP <CR>
-nnoremap <F2> 
+" nnoremap <F2>
 nnoremap <F3> :Autoformat<CR>
 nnoremap <F4> :SyntasticCheck<CR>
 nnoremap <F5> :Make build<CR>
 nnoremap <F6> :Make test<CR>
 nnoremap <F7> :Make itest<CR>
-nnoremap <F8> 
+" nnoremap <F8>
 nnoremap <F9> :NERDTreeToggle<CR> :TagbarToggle<CR>
 nnoremap <F10> :MerginalToggle<CR>
-nnoremap <F11> 
-nnoremap <F11> 
+" nnoremap <F11>
+" nnoremap <F11>
 nnoremap <F12> :set ignorecase! <CR>
 
 nnoremap <S-F5> :call VimuxRunCommand("make clean && make build")<CR>
@@ -194,7 +194,10 @@ endif
 
 if &runtimepath =~ 'solarized'
     let g:solarized_termcolors=256
-    colorscheme solarized
+    try
+        colorscheme solarized
+    catch
+    endtry
 endif
 
 if &runtimepath =~ 'pencil'
