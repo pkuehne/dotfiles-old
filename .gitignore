@@ -1,0 +1,5 @@
+# Ansible sometimes generates these retry files
+*.retry
+
+# Don't version the variables
+vars.yml
