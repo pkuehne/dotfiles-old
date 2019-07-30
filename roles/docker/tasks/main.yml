@@ -57,7 +57,12 @@
       line: "export DOCKER_HOST=tcp://localhost:2375"
       insertafter: EOF
   when: wsl == true
+
+- name: Install wsl.conf
+  become: yes
+  template:
+      src: wslconf.jj2
+      dest: /etc/wsl.conf
+  when: wsl == true
   tags:
       - docker
-
-
