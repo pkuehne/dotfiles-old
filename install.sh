@@ -19,6 +19,6 @@ else
 fi
 
 # Run ansible
-ansible-playbook playbook.yml
+ansible-playbook playbook.yml --ask-sudo-pass
 
 exit 0
