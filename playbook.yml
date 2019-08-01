@@ -2,12 +2,14 @@
 - hosts: 127.0.0.1
   connection: local
   gather_facts: no
-  vars_files:
-      - vars.yml
+  vars:
+      - var_file: "vars.yml"
+  pre_tasks:
   roles:
+      - prompts
+      - bash
       - vim
       - tmux
       - git
-      - bash
       - docker
 

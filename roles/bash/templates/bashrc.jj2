@@ -44,7 +44,14 @@ if ! shopt -oq posix; then
   fi
 fi
 
-
+{% if proxy is defined and proxy is not none  %}
+##
+## Proxy settings
+##
+http_proxy="{{ proxy }}"
+https_proxy="{{ proxy }}"
+no_proxy="localhost"
+{% endif %}
 ##
 ## INCLUDE CUSTOM `.bashrc` CODE
 ##

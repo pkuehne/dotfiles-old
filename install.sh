@@ -9,16 +9,6 @@ else
     sudo ./scripts/setup_ansible.sh
 fi
 
-# Create vars.yml file
-vars_file="./vars.yml"
-if [ -f "$vars_file" ]
-then
-    echo "$vars_file already exists"
-else
-    ./scripts/setup_vars.sh 
-fi
-
-# Run ansible
-ansible-playbook playbook.yml --ask-sudo-pass
+ansible-playbook playbook.yml --ask-become-pass
 
 exit 0

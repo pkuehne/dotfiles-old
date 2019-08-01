@@ -1,0 +1,5 @@
+user: {{ user }}
+email: {{ email }}
+wsl : {{ wsl }}
+arch: {{ arch }}
+proxy: {{ proxy }}

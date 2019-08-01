@@ -1,0 +1,55 @@
+---
+- name: Load var_file if it exists
+  include_vars:
+    file: "{{ var_file }}"
+  when: var_file is exists
+
+- name: Prompt for email if not set
+  pause:
+    prompt: Enter e-mail address
+  when: email is not defined
+  register: prompt_email
+- name: Set email if not set
+  set_fact:
+    email: "{{ prompt_email.user_input }}"
+  when: email is not defined
+
+- name: Set user if not set
+  set_fact: 
+    user: "{{ lookup('env', 'USER') }}"
+  when: user is not defined
+
+- name: Prompt for arch if not set
+  pause:
+    prompt: "Enter arch (amd64/armhf):"
+  when: arch is not defined
+  register: prompt_arch
+- name: Set arch if not set
+  set_fact: 
+    arch: "{{ prompt_arch.user_input }}"
+  when: arch is not defined
+
+- name: Prompt for wsl if not set
+  pause:
+    prompt: "Is this WSL (true/false):"
+  when: wsl is not defined
+  register: prompt_wsl
+- name: Set wsl if not set
+  set_fact: 
+    wsl: "{{ prompt_wsl.user_input }}"
+  when: wsl is not defined
+
+- name: Prompt for proxy if not set
+  pause:
+    prompt: "What's the http proxy?"
+  when: proxy is not defined
+  register: prompt_proxy
+- name: Set proxy if not set
+  set_fact: 
+    proxy: "{{ prompt_proxy.user_input }}"
+  when: proxy is not defined
+  
+- name: Write file with variables
+  template:
+      src: vars.jj2
+      dest: "{{ playbook_dir }}/{{ var_file }}"
