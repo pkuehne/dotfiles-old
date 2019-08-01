@@ -1,5 +1,5 @@
 # Fix terminal colour setting
-set -g default-terminal "screen-256color"
+set -g default-terminal "tmux-256color"
 set -g terminal-overrides "putty-256color"
 
 # Make function keys behave
@@ -76,5 +76,5 @@ run '~/.tmux/plugins/tpm/tpm'
 run-shell ~/.tmux/plugins/tmux-resurrect/resurrect.tmux
 set -g @continuum-restore 'on'
 
-set -g @colors-solarized 'dark'
+set -g @colors-solarized '256'
 
