@@ -1,5 +1,6 @@
 # Ansible sometimes generates these retry files
 *.retry
+*.swp
 
 # Don't version the variables
 vars.yml
