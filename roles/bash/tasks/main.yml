@@ -1,19 +1,28 @@
 ---
-  - name: Install bashrc
+  - name: Set bashrc directory name
+    set_fact:
+        bashrc_dir: "~/.bashrc.d"
+  - name: Ensure bashrc directory exists
+    file:
+        path: "{{ bashrc_dir }}"
+        state: directory
+  - name: Install top-level bashrc
     template:
         src: bashrc.jj2
         dest: ~/.bashrc
-    tags:
-        - config
-  - name: Install bash aliases
+  - name: Install bashrc base
+    template:
+        src: bashrc_base.jj2
+        dest: "{{ bashrc_dir }}/000-base"
+  - name: Install aliases
     template:
         src: bashrc_aliases.jj2
-        dest: ~/.bashrc_aliases
-    tags:
-        - config
-  - name: Install Prompt
+        dest: "{{ bashrc_dir }}/100-aliases"
+  - name: Install prompts
     template:
         src: bashrc_ps1.jj2
-        dest: ~/.bashrc_ps1
-    tags:
-        - config
+        dest: "{{ bashrc_dir }}/800-ps1"
+  - name: Install customizations
+    copy:
+        content: ""
+        dest: "{{ bashrc_dir }}/900-custom"

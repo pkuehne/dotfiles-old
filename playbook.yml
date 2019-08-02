@@ -6,11 +6,17 @@
       - var_file: "vars.yml"
   pre_tasks:
   roles:
-      - prompts
-      - bash
-      - vim
-      - tmux
-      - git
+      - name: prompts
+        tags: ["prompts"]
+      - name: bash
+        tags: ["bash"]
+      - name: vim
+        tags: ["vim"]
+      - name: tmux
+        tags: ["tmux"]
+      - name: git
+        tags: ["git"]
       - name: docker
+        tags: ["docker"]
         when: offline is not defined
 

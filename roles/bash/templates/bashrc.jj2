@@ -1,70 +1,14 @@
 ##
-## BASHRC
+## Source bashrc files from subdirectory
 ##
-
-# If not running interactively, don't do anything
-case $- in
-    *i*) ;;
-      *) return;;
-esac
-
-##
-## Command History Settings
-##
-
-# don't put duplicate lines or lines starting with space in the history.
-HISTCONTROL=ignoreboth
-
-# setting history length 
-HISTSIZE=1000
-HISTFILESIZE=2000
-
-##
-## Shell Options
-##
-
-# append to the history file, don't overwrite it
-shopt -s histappend
-
-# update the values of LINES and COLUMNS after each command
-shopt -s checkwinsize
-
-# "**" matches all files and recursive subdirectories
-shopt -s globstar
-
-##
-## Programmable Completion
-##
-
-if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-  fi
+shopt -s nullglob
+if [ ! -d {{ bashrc_dir }} ]
+then
+    echo "Cannot load bashrc files from {{ bashrc_dir }}"
+    return
 fi
 
-{% if proxy is defined and proxy is not none  %}
-##
-## Proxy settings
-##
-http_proxy="{{ proxy }}"
-https_proxy="{{ proxy }}"
-no_proxy="localhost"
-{% endif %}
-##
-## INCLUDE CUSTOM `.bashrc` CODE
-##
-if [ -f ~/.bashrc_custom ]; then
-    . ~/.bashrc_custom
-fi
-
-if [ -f ~/.bashrc_aliases ]; then
-    . ~/.bashrc_aliases
-fi
-if [ -f ~/.bashrc_ps1 ]; then
-    . ~/.bashrc_ps1
-echo ""
-fi
-
-clear
+for file in {{ bashrc_dir }}/*
+do
+    source "$file"
+done
