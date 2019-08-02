@@ -45,6 +45,7 @@
     state: present
 
 - name: Add "{{ user }}" to docker gorup
+  become: yes
   user:
       name: "{{ user }}"
       append: yes

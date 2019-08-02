@@ -11,5 +11,6 @@
       - vim
       - tmux
       - git
-      - docker
+      - name: docker
+        when: offline is not defined
 

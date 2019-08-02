@@ -11,9 +11,12 @@
       dest: ~/.vim/bundle/Vundle.vim
   tags:
       - repo
+  when: offline is not defined
+
 - name: Install Plugins
   command:
       vim +PluginInstall +qall
   tags:
       - repo
+  when: offline is not defined
 

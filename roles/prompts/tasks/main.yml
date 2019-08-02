@@ -1,4 +1,8 @@
 ---
+- name: Test sudo access
+  become: yes
+  debug:
+      msg: "Sudo works"
 - name: Load var_file if it exists
   include_vars:
     file: "{{ var_file }}"

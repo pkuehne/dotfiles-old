@@ -11,4 +11,5 @@
         dest: ~/.tmux/plugins/tpm
     tags:
         - repo
+    when: offline is not defined
 
