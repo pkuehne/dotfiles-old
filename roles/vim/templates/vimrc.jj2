@@ -107,6 +107,9 @@ filetype off
 " Make md files recognized as Markdown
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 
+" Autoformat file on save
+au BufWrite * :Autoformat
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """"                               PLUGINS                                  """"
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
