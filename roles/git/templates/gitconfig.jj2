@@ -16,3 +16,7 @@
 	prompt = false
 [push]
 	default = current
+[merge]
+        ff = no
+[pull]
+        ff = yes
