@@ -55,7 +55,7 @@ let mapleader=" "
 nnoremap Q       q
 nnoremap <F1> :!banner HELP <CR>
 " nnoremap <F2>
-nnoremap <F3> :Autoformat<CR>
+" nnoremap <F3>
 nnoremap <F4> :SyntasticCheck<CR>
 nnoremap <F5> :Make build<CR>
 nnoremap <F6> :Make test<CR>
@@ -75,7 +75,7 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
 nnoremap <C-Z> :VimwikiAll2HTML<CR>
-nnoremap <C-P> :<C-u>Unite -start-insert file_rec<CR>
+nnoremap <C-P> :<C-u>:CtrlSpace O<CR>
 nnoremap <Leader>w :bp\|bd #<CR>
 nnoremap <Leader>r :source $MYVIMRC<CR>
 nnoremap <Leader>g :Gstatus<CR>
@@ -107,8 +107,8 @@ filetype off
 " Make md files recognized as Markdown
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 
-" Autoformat file on save
-au BufWrite * :Autoformat
+" AutoFormat on file write
+autocmd BufWrite * :Autoformat
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """"                               PLUGINS                                  """"
@@ -141,6 +141,13 @@ if !empty(glob("~/.vim/bundle/Vundle.vim"))
     Plugin 'jnurmine/Zenburn'                   "Syntax highlighting
     " Add plugins above
     call vundle#end()
+endif
+
+if &runtimepath =~ 'autoformat'
+    " Disable vim fallback formatters
+    let g:autoformat_autoindent = 0
+    let g:autoformat_retab = 0
+    let g_autoformat_remove_trailing_spaces = 0
 endif
 
 if &runtimepath =~ 'vimwiki'
