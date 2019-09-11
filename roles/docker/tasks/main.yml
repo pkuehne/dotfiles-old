@@ -52,11 +52,9 @@
       groups: docker
 
 - name: Set Docker host in bashrc for WSL
-  lineinfile:
-      path: ~/.bashrc
-      regexp: "^export DOCKER_HOST"
-      line: "export DOCKER_HOST=tcp://localhost:2375"
-      insertafter: EOF
+  template:
+      src: 201-docker
+      dest: "~/.bashrc.d/"
   when: wsl == true
 
 - name: Install wsl.conf
