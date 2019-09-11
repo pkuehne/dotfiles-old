@@ -1,0 +1,31 @@
+---
+- name: Install tmux
+  become: yes
+  apt:
+      name: entr
+      state: present
+
+- name: Install vim
+  become: yes
+  apt:
+      name: entr
+      state: present
+
+- name: Install ag
+  become: yes
+  apt:
+      name: silversearcher-ag
+      state: present
+
+- name: Install entr
+  become: yes
+  apt:
+      name: entr
+      state: present
+
+- name: Install clang-format
+  become: yes
+  apt:
+      name: entr
+      state: present
+
