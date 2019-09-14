@@ -20,3 +20,5 @@
         ff = no
 [pull]
         ff = yes
+[commit]
+        gpgsign = true
