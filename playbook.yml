@@ -4,21 +4,22 @@
   gather_facts: no
   vars:
       - var_file: "vars.yml"
-  pre_tasks:
   roles:
-      - name: prompts
-        tags: ["prompts"]
-      - name: bash
-        tags: ["bash"]
-      - name: dev-env
-        tags: ["dev-env"]
-      - name: vim
-        tags: ["vim"]
-      - name: tmux
-        tags: ["tmux"]
-      - name: git
-        tags: ["git"]
-      - name: docker
-        tags: ["docker"]
-        when: offline is not defined
+    - name: prompts
+      tags: ["prompts"]
+    - name: bash
+      tags: ["bash"]
+    - name: dev-env
+      tags: ["dev-env"]
+    - name: gpg
+      tags: ["gpg"]
+    - name: vim
+      tags: ["vim"]
+    - name: tmux
+      tags: ["tmux"]
+    - name: git
+      tags: ["git"]
+    - name: docker
+      tags: ["docker"]
+      when: offline is not defined
 

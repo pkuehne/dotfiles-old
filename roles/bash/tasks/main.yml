@@ -18,6 +18,10 @@
     template:
         src: bashrc_aliases.jj2
         dest: "{{ bashrc_dir }}/100-aliases"
+  - name: Install services settings
+    copy:
+        content: ""
+        dest: "{{ bashrc_dir }}/200-sevices"
   - name: Install prompts
     template:
         src: bashrc_ps1.jj2

@@ -29,3 +29,9 @@
       name: entr
       state: present
 
+- name: Install ctags
+  become: yes
+  apt:
+      name: ctags
+      state: present
+

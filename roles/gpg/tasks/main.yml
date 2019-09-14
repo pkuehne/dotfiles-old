@@ -1,0 +1,15 @@
+---
+- name: Install gpg config in bashrc
+  template:
+      src: 202-gpg.jj2
+      dest: "{{ bashrc_dir }}/202-gpg"
+- name: SSH support in gpg conf
+  lineinfile:
+      path: ~/.gnupg/gpg-agent.conf
+      regexp: '^enable-ssh-support'
+      line: 'enable-ssh-support'
+- name: Add Keygrip to sshcontrol
+  lineinfile:
+      path: ~/.gnupg/sshcontrol
+      regexp: '^4C47E655F1A3D0B726ED14399C38890590D7FA68'
+      line: "\n# GPG Key\n4C47E655F1A3D0B726ED14399C38890590D7FA68"
