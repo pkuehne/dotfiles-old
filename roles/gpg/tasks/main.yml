@@ -1,4 +1,10 @@
 ---
+- name: Install scdaemon
+  become: yes
+  apt:
+      name: scdaemon
+      state: present
+
 - name: Install gpg config in bashrc
   template:
       src: 202-gpg.jj2

@@ -9,10 +9,10 @@
       tags: ["prompts"]
     - name: bash
       tags: ["bash"]
-    - name: dev-env
-      tags: ["dev-env"]
     - name: gpg
       tags: ["gpg"]
+    - name: dev-env
+      tags: ["dev-env"]
     - name: vim
       tags: ["vim"]
     - name: tmux
