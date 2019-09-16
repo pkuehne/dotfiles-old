@@ -148,6 +148,7 @@ if !empty(glob("~/.vim/bundle/Vundle.vim"))
     Plugin 'tomtom/tlib_vim'                    "Dependency for vim-snipmate
     Plugin 'garbas/vim-snipmate'                "Snippet Manager
     Plugin 'honza/vim-snippets'                 "Useful snippets
+    Plugin 'jiangmiao/auto-pairs'               "Auto close brackets
     " Add plugins above
     call vundle#end()
 endif
@@ -248,6 +249,7 @@ if &runtimepath =~ 'vim-ctrlspace'
     let g:CtrlSpaceStatuslineFunction = "airline#extensions#ctrlspace#statusline()"
     let g:CtrlSpaceSaveWorkspaceOnSwitch = 1
     let g:CtrlSpaceSaveWorkspaceOnExit = 1
+    let g:CtrlSpaceLoadLastWorkspaceOnStart = 1
     if executable("ag")
         let g:CtrlSpaceGlobCommand = 'ag -l --nocolor -g ""'
     endif
