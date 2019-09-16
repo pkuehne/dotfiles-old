@@ -23,24 +23,23 @@ set cc=81               " Shows a line marker at 80 characters
 set wrap                " wrap lines onto screen, rather than cutting off
 set expandtab           " use spaces instead of tabs
 set backspace=indent,eol,start  " backspace works for softtabs in insert mode
-set whichwrap=b,s,<,>,[,]
-set tags=~/tags,tags,./tags
+set whichwrap=b,s,<,>,[,]       " Which chars identify a word-wrap boundary
+set tags=~/tags,tags,./tags     " Where to find tag files
 set autowrite           " Saves automatically on exit
 set diffopt+=iwhite     " Ignores whitespace in vimdiff
 set iskeyword=a-z,A-Z,48-57,_,~ " add ~ as a keyword character for c++
 set completeopt=longest,menuone "Autocomplete menu
 set smartindent         " Indent all sorts of files
-set splitbelow          " For vs, sv split options
-set splitright
+set splitbelow          " For vs and sv split options
+set splitright          " Open new splits below or to the right
 set cino=N-s            "Don't indent for open namespaces
 set laststatus=2        "Always display the status line
-set spell spelllang=en_gb   "Set spell check to British English
-set encoding=utf-8
+set spell spelllang=en_gb       "Set spell check to British English
+set encoding=utf-8      " Use UTF-8 by default
 set t_Co=256            " Force 256 colours
-set background=dark
+set background=dark     " Dark mode
 set hidden              " Allow hidden buffers with unsaved changes
-
-set title titleold=%<%F%=%l/%L-%P titlelen=70
+set showtabline=0       " Don't show the tabline, easier for ctrlspace
 
 set wildignore+=*/00deps/*,*/llcalc*/*,*.o,*.dd,*.d,00*,*.gcno,*.gcda
 set wildignore+=*.log*
@@ -51,13 +50,13 @@ set wildignore+=*.pyc*
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let mapleader=" "
 
-" Reformat paragraph: gq
-nnoremap Q       q
+" Function key mappings
 nnoremap <F1> :!banner HELP <CR>
 " nnoremap <F2>
 " nnoremap <F3>
 nnoremap <F4> :SyntasticCheck<CR>
 nnoremap <F5> :Make build<CR>
+nnoremap <S-F5> :call VimuxRunCommand("make clean && make build")<CR>
 nnoremap <F6> :Make test<CR>
 nnoremap <F7> :Make itest<CR>
 " nnoremap <F8>
@@ -67,21 +66,24 @@ nnoremap <F10> :MerginalToggle<CR>
 " nnoremap <F11>
 nnoremap <F12> :set ignorecase! <CR>
 
-nnoremap <S-F5> :call VimuxRunCommand("make clean && make build")<CR>
-
+" Map Ctrl+hJKL to move between splits
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-nnoremap <C-Z> :VimwikiAll2HTML<CR>
-nnoremap <C-P> :<C-u>:CtrlSpace O<CR>
-nnoremap <Leader>w :bp\|bd #<CR>
+" Resource vimrc after changes
 nnoremap <Leader>r :source $MYVIMRC<CR>
-nnoremap <Leader>g :Gstatus<CR>
+
+" Open Auto-Complete window
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <expr> <C-n> pumvisible() ? '<C-n>' : '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+inoremap <expr> <M-,> pumvisible() ? '<C-n>' : '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 
 """ Plugin-specific Leader mappings """
 """""""""""""""""""""""""""""""""""""""
+
+" Bookmarks
 nmap <Leader>bt <Plug>BookmarkToggle
 nmap <Leader>ba <Plug>BookmarkAnnotate
 nmap <Leader>bs <Plug>BookmarkShowAll
@@ -93,17 +95,20 @@ nmap <Leader>bk <Plug>BookmarkMoveUp
 nmap <Leader>bj <Plug>BookmarkMoveDown
 nmap <Leader>bg <Plug>BookmarkMoveToLine
 
+" Fugitive
+nnoremap <Leader>g :Gstatus<CR>
+
+" Autoformat
 nmap <Leader>a :Autoformat<CR>
 
+" Open CtrlSpace in serach mode
+nnoremap <C-P> :<C-u>:CtrlSpace O<CR>
 nmap <Leader>h :CtrlSpaceGoUp<CR>
 nmap <Leader>l :CtrlSpaceGoDown<CR>
 
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-inoremap <expr> <C-n> pumvisible() ? '<C-n>' : '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-inoremap <expr> <M-,> pumvisible() ? '<C-n>' : '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-
-filetype off
-
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""                         Auto CommandsS                                 """"
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Make md files recognized as Markdown
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 
@@ -139,6 +144,10 @@ if !empty(glob("~/.vim/bundle/Vundle.vim"))
     Plugin 'benmills/vimux'                     "Vim/tmux integration
     Plugin 'vimwiki/vimwiki'                    "Personal wiki
     Plugin 'jnurmine/Zenburn'                   "Syntax highlighting
+    Plugin 'MarcWeber/vim-addon-mw-utils'       "Dependency for vim-snipmate
+    Plugin 'tomtom/tlib_vim'                    "Dependency for vim-snipmate
+    Plugin 'garbas/vim-snipmate'                "Snippet Manager
+    Plugin 'honza/vim-snippets'                 "Useful snippets
     " Add plugins above
     call vundle#end()
 endif
