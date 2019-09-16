@@ -140,9 +140,7 @@ if !empty(glob("~/.vim/bundle/Vundle.vim"))
     Plugin 'reedes/vim-pencil'                  "For writers
     Plugin 'octol/vim-cpp-enhanced-highlight'   "Better C++ syntax highlighting
     Plugin 'scrooloose/syntastic'               "Syntax check on save
-    Plugin 'majutsushi/tagbar'                  "Tag Manager
     Plugin 'benmills/vimux'                     "Vim/tmux integration
-    Plugin 'vimwiki/vimwiki'                    "Personal wiki
     Plugin 'jnurmine/Zenburn'                   "Syntax highlighting
     Plugin 'MarcWeber/vim-addon-mw-utils'       "Dependency for vim-snipmate
     Plugin 'tomtom/tlib_vim'                    "Dependency for vim-snipmate
@@ -158,19 +156,6 @@ if &runtimepath =~ 'autoformat'
     let g:autoformat_autoindent = 0
     let g:autoformat_retab = 0
     let g_autoformat_remove_trailing_spaces = 0
-endif
-
-if &runtimepath =~ 'vimwiki'
-    let mainwiki = {}
-    let mainwiki.path = '$HOME/.vim/wiki'
-    let mainwiki.path_html = '$HOME/public_html/wiki/'
-    let mainwiki.auto_toc = 1
-
-    let storywiki = {}
-    let mainwiki.path = '$HOME/private/wiki'
-    let mainwiki.path_html = '$HOME/public_html/nowiki/'
-    let mainwiki.auto_toc = 1
-    let g:vimwiki_list = [ mainwiki, storywiki ]
 endif
 
 if &runtimepath =~ 'syntastic'
@@ -233,14 +218,6 @@ if &runtimepath =~ 'pencil'
     augroup END
 endif
 
-" Vimwiki settings
-if &runtimepath =~ 'vimwiki'
-    let g:vimwiki_list = [
-                \ {'path': '$HOME/Documents/wiki/', 'path_html': '$HOME/public_html/'},
-                \ {'path': '$HOME/Writings/test/wiki/', 'path_html': '$HOME/Writings/test/wiki/export'}
-                \ ]
-endif
-
 if &runtimepath =~ 'bookmark'
     let g:bookmark_no_default_key_mappings = 1
 endif
@@ -255,7 +232,7 @@ if &runtimepath =~ 'vim-ctrlspace'
     endif
 endif
 
-if &runtimepath =~ 'nerdcommented'
+if &runtimepath =~ 'nerdcommenter'
     let g:NERDSpaceDelims = 1
     let g:NERDCommentEmptyLines = 1
     let g:NERDTrimTrailingWhitespace = 1
