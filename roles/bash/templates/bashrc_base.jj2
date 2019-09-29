@@ -15,7 +15,7 @@ esac
 # don't put duplicate lines or lines starting with space in the history.
 HISTCONTROL=ignoreboth
 
-# setting history length 
+# setting history length
 HISTSIZE=1000
 HISTFILESIZE=2000
 
@@ -35,7 +35,6 @@ shopt -s globstar
 ##
 ## Programmable Completion
 ##
-
 if ! shopt -oq posix; then
   if [ -f /usr/share/bash-completion/bash_completion ]; then
     . /usr/share/bash-completion/bash_completion
@@ -43,6 +42,11 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+##
+## Set vi mode
+##
+set -o vi
 
 {% if proxy is defined and proxy is not none  %}
 ##
