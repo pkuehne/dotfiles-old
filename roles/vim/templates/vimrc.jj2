@@ -42,6 +42,7 @@ set hidden              " Allow hidden buffers with unsaved changes
 set showtabline=0       " Don't show the tabline, easier for ctrlspace
 set formatoptions-=r    " Don't insert comment on newline when hitting <CR>
 set formatoptions-=o    " DOn't insert comment when typing o on line with comment
+set noswapfile          " Don't use swap files, I save often...
 
 set wildignore+=*/00deps/*,*/llcalc*/*,*.o,*.dd,*.d,00*,*.gcno,*.gcda
 set wildignore+=*.log*
@@ -241,5 +242,4 @@ if &runtimepath =~ 'nerdcommenter'
 endif
 
 filetype plugin indent on
-syntax on           " enables syntax highlighting
-
+syntax on               " enables syntax highlighting
